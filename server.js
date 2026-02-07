@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
       </style>
     </head>
     <body>
-      <h1>Send Notification to Mobile</h1>
+      <h1>Send Notification to Mobile Android</h1>
       <button onclick="sendNotification()">Send Notification</button>
       <div id="status"></div>
       
