@@ -13,8 +13,20 @@ io.on('connection', (socket) => {
   
   // Listen for waiter call requests
   socket.on('waiter-call', (data) => {
-    console.log('Waiter call received:', data);
-    io.emit('waiter-notification', data);
+    // Add unique ID to the call
+    const callData = {
+      ...data,
+      id: `${data.table}-${data.timestamp}`,
+      status: 'pending'
+    };
+    console.log('Waiter call received:', callData);
+    io.emit('waiter-notification', callData);
+  });
+
+  // Listen for status updates
+  socket.on('update-status', (data) => {
+    console.log('Status update:', data);
+    io.emit('status-update', data);
   });
   
   socket.on('disconnect', () => {
@@ -251,4 +263,5 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 3000;
 http.listen(PORT, '0.0.0.0', () => {
   console.log('🍽️  Waiter Call System running on port ' + PORT);
+  console.log(`📱 Access at: http://localhost:${PORT}`);
 });
